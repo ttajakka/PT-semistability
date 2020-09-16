@@ -1,0 +1,200 @@
+\documentclass[letterpaper,12pt]{amsart}
+
+\setlength{\evensidemargin}{-0.0in}
+\setlength{\oddsidemargin}{-0.0in}
+\setlength{\textwidth}{6.4in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+%\usepackage{mathpazo}
+\usepackage{relsize}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{verbatim}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Moduli of higher rank PT stable pairs}
+\rhead{Tuomas Tajakka}
+%\cfoot{}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage{amsthm}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{expl}[thm]{Example}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{exer}[thm]{Exercise}
+
+\title{Proper and projective moduli spaces of higher rank PT stable pairs}
+\author{Tuomas Tajakka}
+\date{}
+
+\usepackage{commands}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\section{PT-semistable objects}
+In this section we recall definitions and basic properties of PT-stability conditions. They are examples of polynomial stability conditions defined in \cite{bayer-polynomial} as a generalization of Bridgeland stability in order to understand the large volume limit of Bridgeland stability conditions, as well as to study relations between various curve counting invariants. We largely follow \cite{lo-PT1} and \cite{lo-PT2} in our presentation, except that we use a slightly different convention for the heart of category of perverse sheaves.
+
+Let $(X, H)$ be a smooth, projective. polarized 3-fold. Polynomial stability on $X$ is defined as a stability condition on a heart $\sA^p(X) \subs D^b(X)$. The heart $\sA^p(X)$ is defined using tilting as follows. Define full subcategories
+\[ \Coh_{\le 1}(X) = \{ E \in \Coh(X) \;|\; \dim(\Supp(X)) \le 1 \} \]
+and
+\[ \Coh_{\ge 2}(X) = \{ E \in \Coh(X) \;|\; \Hom(T,E) = 0 \; \forall \; T \in \Coh_{\le 1}(X) \}. \]
+For any coherent sheaf $E$ on $X$ there exists a unique short exact sequence
+\begin{equation}\label{torsionses}
+    0 \to T \to E \to F \to 0
+\end{equation} 
+where $T \in \Coh_{\le 1}(X)$ and $F \in \Coh_{\ge 2}(X)$. Here the subsheaf $T \subs E$ is the union of all subsheaves $T' \subs E$ with $\dim(\Supp(T')) \le 1$. The exact sequence \eqref{torsionses} shows that the pair $(\Coh_{\le 1}(X), \Coh_{\ge 2}(X))$ is a \emph{torsion pair} on $\Coh(X)$. We define the heart $\sA^p(X) \subs D^b(X)$ as the tilt with respect to this torsion pair, that is,
+\begin{align}\label{perverseheart}
+    \sA^p(X) & = \langle \Coh_{\ge 2}(X), \Coh_{\le 1}(X)[-1] \rangle \\
+             & = \{ E \in D^b(X) \;|\; \sH^0(E) \in \Coh_{\le 1}(X), \sH^1(E) \in \Coh_{\ge 2}(X), \sH^i(E) = 0 \;\forall i \neq 0,1 \}. \nonumber
+\end{align}
+Equivalently, $\sA^p(X)$ is the full subcategory of $D^b(X)$ consisting of objects $E$ that fit into an exact sequence
+\[ 0 \to F \to E \to T[-1] \to 0, \]
+where $F \in \Coh_{\ge 2}(X), T \in \Coh_{\le 1}(X)$.
+
+We come to the definition of a PT-stability condition. Recall that $H \subs X$ denotes an ample divisor.
+\begin{defn}
+    A \textbf{PT-stability condition} on $X$ consists of the data of
+    \begin{enumerate}[(1)]
+        \item the heart $\sA^p = \langle \Coh_{\ge 2}(X), \Coh_{\le 1}(X) \rangle$, and
+        \item a group homomorphism $Z: \Kn(X) \to \C[m]$, called the \emph{central charge}, of the form
+        \[ Z(E)(m) = \sum_{d=0}^3 \rho_d \left(\int_X H^d \cdot \ch(E) \cdot U\right) m^d, \]
+        where
+        \begin{enumerate}[(a)]
+            \item the $\rho_d \in \C^*$ are nonzero complex numbers such that $-\rho_0, -\rho_1, \rho_2, \rho_3 \in \Hh$, and whose phases satisfy
+            \[ \phi(\rho_2) > \phi(-\rho_0) > \phi(\rho_3) > \phi(-\rho_1). \]
+            \item $U = 1 + U_1 + U_2 + U_3 \in A^*(X)$ is a class with $U_i \in A^i(X)$ for $i = 1, 2, 3$.
+        \end{enumerate}
+    \end{enumerate}
+\end{defn}
+The configuration of the complex numbers $\rho_i$ are compatible with the heart $\sA^p(X)$ in the sense that for any nonzero $E \in \sA^p(X)$, we have $Z(E)(m) \in \Hh$ for $m \gg 0$. This allows us to define a notion of stability on $\sA^p(X)$: an object $E \in \sA^p(X)$ is called Z-\textbf{stable} (resp. Z-\textbf{semistable}) if for every proper nonzero subobject $F \subs E$, we have 
+\[ \phi(Z(F)(m)) < \phi(Z(E)(m) \quad (\mathrm{resp.} \quad \phi(Z(F)(m)) \le \phi(Z(E)(m)) \quad \mathrm{for} \quad m \gg 0.  \]
+
+\begin{rmk}
+    Our definition of the heart $\sA^p(X)$ and differs from that in \cite{lo-PT1}, \cite{lo-PT2}, and \cite{bayer-polynomial} by a shift: the nonzero cohomology sheaves are in degrees $0$ and $1$ rather than $-1$ and $0$. To account for this, also our definition of the charge $Z$ differs in that $-\rho_0, -\rho_1, \rho_2, \rho_3$, rather than $\rho_0, \rho_1, -\rho_2, -\rho_3$, are in the open upper half plane $\Hh$.
+    
+    The reason for this choice is purely psychological: if $E \in \Coh(X)$ is a torsion-free sheaf, then $E$, rather than $E[1]$, is contained in $\sA^p(X)$. This will let us view the moduli of PT-semistable objects as an enlargement of the moduli of $\mu$-stable vector bundles without having to perform a shift.
+\end{rmk} 
+
+
+In summary, a PT-semistable object $E \in D^b(X)$ satisfies the following conditions.
+\begin{enumerate}[(i)]
+    \item $\sH^0(E)$ is torsion-free and $\mu$-semistable,
+    \item $\sH^1(E)$ is 0-dimensional,
+    \item $\Hom_{D^b(X)}(T[-1], E) = 0$ for any 0-dimensional sheaf $T$,
+    \item $\sH^i(E) = 0$ for $i \neq 0, 1$.
+\end{enumerate}
+
+
+\section{Moduli stacks}
+The stack of PT-semistable objects of a fixed numerical class $v \in \Kn(X)$ is a universally closed algebraic stack of finite type by the work of Jason Lo. The goal of this note is to construct a globally generated line bundle on this stack.
+
+\section{Construction of good moduli spaces}
+
+\section{Semiample determinantal line bundle}
+Fix a class $v \in \Kn(X)$ of positive rank and let $E \in D^b(X)$ be an object of class $v$ satisfying the following conditions.
+\begin{enumerate}[(i)]
+    \item $\sH^0(E)$ is torsion-free and $\mu$-semistable,
+    \item $\sH^1(E)$ is 0-dimensional,
+    \item $\Hom_{D^b(X)}(T[-1], E) = 0$ for any 0-dimensional sheaf $T$,
+    \item $\sH^i(E) = 0$ for $i \neq 0, 1$.
+\end{enumerate}
+In particular, $E$ can be a PT-semistable object. Setting $F = \sH^0(E)$ and $T = \sH^1(E)$, we see that $E$ fits in an exact triangle
+\[ F \to E \to T[-1]. \]
+Since $F$ is torsion-free, it embeds into its double dual $F^{\vee\vee}$ and the quotient $Q \coloneqq F^{\vee\vee}/F$ is 1-dimensional. We first claim that $Q$ is pure 1-dimensional. If not, let $Q_0 \subs Q$ denote the maximal 0-dimensional subsheaf. We have an exact triangle
+\[ Q[-1] \to F \to F^{\vee\vee} \]
+where $Q[-1] \to F$ is a nonzero map. Thus, we get a nonzero map
+\[ Q_0[-1] \to Q[-1] \to F \to E \]
+as a sequence of inclusions in the heart of a bounded t-structure of perverse sheaves. But this is impossible since $\Hom_{D^b(X)}(Q_0[-1], E) = 0$ by assumption.
+
+Let now $H \subs X$ be a smooth surface corresponding to a section $s \in H^0(X, \Oh_X(a))$ for some $a \in \N$, and let $i: H \to X$ denote the inclusion. Denote by $i^*: \Coh(X) \to \Coh(H)$ and $Li^*: D^b(X) \to D^b(H)$ the ordinary and derived restriction respectively. Since $i_*: \Coh(H) \to \Coh(X)$ is exact, we denote the corresponding functor $D^b(H) \to D^b(X)$ by the same symbol.
+
+\begin{lem}
+Assume that $H$ does not contain any of the components of the support of $Q$. The derived restriction $L i^* E$ satisfies:
+\begin{enumerate}[(i')]
+    \item $\sH^0(L i^* E)$ is torsion-free,
+    \item $\sH^1(L i^* E)$ is zero-dimensional,
+    \item $\sH^i(L i^* E) = 0$ for $i \neq 0, 1$. 
+\end{enumerate}
+\end{lem}
+\begin{proof}
+First of all, we claim that the derived restriction of $F$ to $H$ is actually a torsion-free sheaf. The restriction $Li^* Q$ is the cone of the morphism $Q \otimes \Oh_X(-a) \xrightarrow{s} Q$, and since $s$ acts as a nonzero divisor on $Q$, we see that $L i^* Q = i^* Q$ is a 0-dimensional sheaf. Moreover, since $F^{\vee\vee}$ is reflexive, the restriction $L i^* F^{\vee\vee} = i^* F^{\vee\vee}$ is a torsion-free sheaf by \cite[Corollary 1.1.14]{HL}. Now from the short exact sequence
+\[ 0 \to F \to F^{\vee\vee} \to Q \to 0 \]
+we obtain an exact triangle
+\[ L i^* F \to i^* F^{\vee\vee} \to i^*Q. \]
+Since $\sH^{-1}(i^* Q) = 0$, we see that $L i^* F = i^* F$ is a subsheaf of $i^* F^{\vee\vee}$, hence torsion-free.
+
+Now consider the exact triangle
+\[ F \to E \to T[-1] \]
+as above. This yields an exact triangle
+\[ i^*F \to L i^* E \to L i^* T[-1] \]
+in $D^b(H)$. The object $L i^* T[-1]$ fits in an exact triangle
+\[ T' \to L i^* T \to T''[-1], \]
+where $T'$ and $T''$ are 0-dimensional sheaves on $H$. Thus, the long exact sequence of cohomology sheaves reads
+\[ 0 \to i^* F \to \sH^0(L i^* E) \to T' \to 0 \to \sH^1(Li^* E) \to T'' \to 0. \]
+From this we see that first of all $\sH^1(Li^* E) \cong T''$ is 0-dimensional. Second, we see that the associated points of $\sH^0(L i^* E)$ are contained in the associated points of $i^* F$ and $T'$, meaning that they are either the generic point of $H$ or closed points. If a closed point $p \in H$ is an associated point, then there is a nonzero map $\Oh_p \to \sH^0(L i^* E)$, and so a nonzero map $\Oh_p \to L i^* E$, and so $\Hom_{D^b(H)}(\Oh_p, L i^* E) \neq 0$. But this is impossible for the following reason.
+
+Since $H$ and $X$ are smooth, they have dualizing line bundles $\om_H$ and $\om_X$ respectively. Moreover, the pushforward $i_*: D^b(H) \to D^b(X)$ is a right adjoint to $L i^*$. Thus, we have
+\begin{align*}
+    \Hom_{D^b(H)}(\Oh_p, L i^* E) & \cong \Hom_{D^b(H)}(L i^* E, \Oh_p \otimes \om_H[2])^\vee \\
+    & \cong \Hom_{D^b(H)}(L i^* E, \Oh_p[2])^\vee \\
+    & \cong \Hom_{D^b(X)}(E, i_*\Oh_p[2])^\vee \\
+    & \cong \Hom_{D^b(X)}(\Oh_p[2], E \otimes \om_X[3]) \\
+    & \cong \Hom_{D^b(X)}(\Oh_p \otimes \om_X^\vee[-1], E) \\
+    & \cong \Hom_{D^b(X)}(\Oh_p[-1], E).
+\end{align*}
+By assumption on $E$ we have $\Hom_{D^b(X)}(\Oh_p[-1], E) = 0$. Thus, $p$ cannot be an associated point of $\sH^0(L i^* E)$, and so $\sH^0(L i^* E)$ is torsion-free as claimed.
+\end{proof}
+
+Let now $C \subs X$ be a smooth, connected curve that is the intersection of $H$ with another smooth surface $H' \in |\Oh_X(a)|$. Since we obtain the derived restriction $E|^\LL_C$ by first restricting to $H$, it follows from the previous lemma and \cite[Lemma 6.3]{t} that the $E|^\LL_C$ fits in a triangle
+\[ \sH^0(E|^\LL_C) \to E|^\LL_C \to \sH^1(E|^\LL_C), \]
+where $\sH^1(E|^\LL_C)$ is a torsion sheaf.
+
+\section{TODO}
+\begin{itemize}
+    \item For large enough $a$, the curve $C = H \cap H'$ cannot contain components of $Q = F^{\vee\vee}/F$. This should follow from the fact that the family of PT-semistable objects is bounded, and hence so are the degrees of the possible $Q$.
+    \item Some appropriate power of the line bundle $\la_{\sE}(u_2(v))$ is obtained by restricting the universal family $\sE$ to $C$ and doing the determinantal thing. Write this down, and find the correct power.
+    \item $\la_{\sE}(u_2(v))$ is semiample because for a given $E$, we can choose $C$ so that $E|^\LL_C = F|_C$ is a semistable vector bundle. This gives a map to a projective space.
+    \item The map to $\p^N$ cannot contract curves at least along the locus of stable vector bundles. This follows from the Second Main Lemma of \cite{seshadri}, and an argument similar to \cite[Lemma 8.2.12]{HL}.
+\end{itemize}
+
+\section{Questions}
+\begin{itemize}
+    \item Does the stack have a good moduli space? How does this fit in the "moduli of objects in an abelian category" business? And while at it, why does the stack of $\mu$-semistable sheaves not have a good moduli space but the Bridgeland stack does?
+    \item Does $\la_{\sE}(u_2(v))$ descend to said good moduli space?
+    \item $\la_{\sE}(u_2(v))$ doesn't contract curves along the $\mu$-stable locus, but does it actually separate points? What does it contract outside the $\mu$-stable locus?
+    \item Do the images in $\p^N$ stabilize for increasingly large powers of $\la_{\sE}(u_2(v))$?
+\end{itemize}
+
+\bibliographystyle{alpha}
+\addcontentsline{toc}{section}{References}
+\bibliography{bibliography}
+
+\end{document}
